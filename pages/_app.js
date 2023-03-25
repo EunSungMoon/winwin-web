@@ -1,12 +1,16 @@
+import { FormProvider, useFormContext } from "react-hook-form"
 import { ThemeProvider } from "styled-components"
 import theme from './components/theme/color'
 
 function MyApp({ Component, pageProps }) {
-console.log(theme.colors)
+  const form = useFormContext()
+
   return (
-    <ThemeProvider theme={theme}>
-      <Component {...pageProps} />
-    </ThemeProvider>
+    <FormProvider {...form}>
+      <ThemeProvider theme={theme}>
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </FormProvider>
   )
 }
 

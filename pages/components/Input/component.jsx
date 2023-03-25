@@ -1,21 +1,31 @@
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller, useFormContext, get } from "react-hook-form";
 import Input from "@mui/material/TextField";
 
-const Component = () => {
-  const { control } = useFormContext();
+const Component = ({ name, placeholder }) => {
+  const { control, formState } = useFormContext();
+
+  const dv = get(
+    control._defaultValues,
+    name,
+    typeof defaultValue !== "undefined" ? defaultValue : null
+  );
+  const error = get(formState.errors, name);
+
   return (
     <Controller
       control={control}
-      name="test"
-      render={{ field: { onChange, value }, formState }}
-    >
-      <Input
-        onChange={(e) => e.target.value}
-        id="outlined-basic"
-        label="Outlined"
-        variant="outlined"
-      />
-    </Controller>
+      name={name}
+      render={({ field: { onChange, value }, formState }) => (
+        <Input
+          id="outlined-basic"
+          label={placeholder}
+          variant="outlined"
+          onChange={(e) => onChange(e.target.value)}
+          value={value}
+          defaultValue={dv}
+        />
+      )}
+    />
   );
 };
 
