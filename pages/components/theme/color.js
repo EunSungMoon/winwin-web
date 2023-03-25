@@ -1,9 +1,15 @@
-const theme = {
-  colors: {
-    red: {
-      '100': 'red'
-    }
-  }
+export const gray = {
+  0: '#ffffff'
 }
+
+export const colors = {
+  gray
+}
+
+
+const theme = {
+  colors
+}
+
 
 export default theme
