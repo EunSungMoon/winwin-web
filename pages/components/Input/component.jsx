@@ -1,7 +1,15 @@
 import { Controller, useFormContext, get } from "react-hook-form";
 import Input from "@mui/material/TextField";
 
-const Component = ({ name, placeholder }) => {
+const Component = ({
+  name,
+  label,
+  required,
+  placeholder,
+  variant,
+  size,
+  ...props
+}) => {
   const { control, formState } = useFormContext();
 
   const dv = get(
@@ -17,12 +25,16 @@ const Component = ({ name, placeholder }) => {
       name={name}
       render={({ field: { onChange, value }, formState }) => (
         <Input
-          id="outlined-basic"
-          label={placeholder}
-          variant="outlined"
+          error={error && error}
+          label={label}
+          variant={variant}
           onChange={(e) => onChange(e.target.value)}
           value={value}
-          defaultValue={dv || ""}
+          defaultValue={dv}
+          required={required}
+          placeholder={placeholder}
+          size={size}
+          {...props}
         />
       )}
     />

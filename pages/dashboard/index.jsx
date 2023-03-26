@@ -10,14 +10,13 @@ const Page = ({ initialData }) => {
       input: "",
     },
   });
-  console.log(form.watch());
 
   const onSubmit = (data) => console.log(data);
 
   return (
     <FormProvider {...form}>
       <Form form={form}>
-        <Input name="input" />
+        <Input name="input" label="input" placeholder="hi" required={true} variant="standard" />
       </Form>
     </FormProvider>
   );
