@@ -22,7 +22,7 @@ const Component = ({ name, placeholder }) => {
           variant="outlined"
           onChange={(e) => onChange(e.target.value)}
           value={value}
-          defaultValue={dv}
+          defaultValue={dv || ""}
         />
       )}
     />

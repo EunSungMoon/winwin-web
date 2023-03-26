@@ -5,18 +5,20 @@ import Form from "../components/Form";
 import { useEffect } from "react";
 
 const Page = ({ initialData }) => {
-  const form = useForm({});
+  const form = useForm({
+    defaultValues: {
+      input: "",
+    },
+  });
+  console.log(form.watch());
 
   const onSubmit = (data) => console.log(data);
 
   return (
-    // <Form form={form} onSubmit={onSubmit}>
-    //   <Input name="input" />
-    // </Form>
     <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <Form form={form}>
         <Input name="input" />
-      </form>
+      </Form>
     </FormProvider>
   );
 };
