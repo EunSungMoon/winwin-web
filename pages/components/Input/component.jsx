@@ -23,6 +23,7 @@ const Component = ({
     <Controller
       control={control}
       name={name}
+      defaultValue={dv}
       render={({ field: { onChange, value }, formState }) => (
         <Input
           error={error && error}
@@ -30,7 +31,6 @@ const Component = ({
           variant={variant}
           onChange={(e) => onChange(e.target.value)}
           value={value}
-          defaultValue={dv}
           required={required}
           placeholder={placeholder}
           size={size}

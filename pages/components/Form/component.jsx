@@ -1,7 +1,6 @@
-import { FormProvider, useFormContext } from "react-hook-form";
+import { FormProvider } from "react-hook-form";
 
-const Component = ({ id, children, onSubmit, onError }) => {
-  const form = useFormContext();
+const Component = ({ id, children, onSubmit, onError, form }) => {
 
   return (
     <FormProvider {...form}>
