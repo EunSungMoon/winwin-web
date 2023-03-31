@@ -1,7 +1,7 @@
-import Input from "../components/Input";
+import Input from "../../components/Input";
 import styled from "styled-components";
 import { useForm, FormProvider } from "react-hook-form";
-import Form from "../components/Form";
+import Form from "../../components/Form";
 import { useEffect } from "react";
 
 const Page = ({ initialData }) => {
@@ -14,11 +14,15 @@ const Page = ({ initialData }) => {
   const onSubmit = (data) => console.log(data);
 
   return (
-    <FormProvider {...form}>
-      <Form form={form}>
-        <Input name="input" label="input" placeholder="hi" required={true} variant="standard" />
-      </Form>
-    </FormProvider>
+    <Form form={form}>
+      <Input
+        name="input"
+        label="input"
+        placeholder="hi"
+        required={true}
+        variant="standard"
+      />
+    </Form>
   );
 };
 

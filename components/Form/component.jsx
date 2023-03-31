@@ -1,14 +1,21 @@
 import { FormProvider } from "react-hook-form";
+import styled from "styled-components";
 
 const Component = ({ id, children, onSubmit, onError, form }) => {
-
   return (
     <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit, onError)} id={id}>
+
+      <StyledForm onSubmit={form.handleSubmit(onSubmit, onError)} id={id}>
         {children}
-      </form>
+      </StyledForm>
+
     </FormProvider>
   );
 };
 
 export default Component;
+
+const StyledForm = styled.form`
+  display: flex;
+  flex-flow: column;
+`;

@@ -1,6 +1,6 @@
-import Button from "@mui/material";
+import Button from "@mui/material/Button";
 
-const Component = ({ variant, disabled, appearance, size, onClick }) => {
+const Component = ({ variant, disabled, appearance, size, onClick, label }) => {
   // variant : text, contained ,outlined
   //color:https://mui.com/material-ui/customization/palette/#adding-new-colors
   // size : small, medium, large
@@ -14,7 +14,7 @@ const Component = ({ variant, disabled, appearance, size, onClick }) => {
       color={appearance}
       size={size}
       onClick={onClick ? onClick : null}
-    />
+    >{label}</Button>
   );
 };
 
