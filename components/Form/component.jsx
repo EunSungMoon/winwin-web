@@ -18,4 +18,8 @@ export default Component;
 const StyledForm = styled.form`
   display: flex;
   flex-flow: column;
+  
+  div>div{
+    margin-bottom:24px
+  }
 `;
