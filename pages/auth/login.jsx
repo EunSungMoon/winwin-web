@@ -19,7 +19,7 @@ const Page = () => {
 
   const handleLogin = async (data) => {
     try {
-      const res = login(data);
+      const res =await login(data);
       console.log(data);
       return res;
     } catch (err) {

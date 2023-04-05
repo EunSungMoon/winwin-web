@@ -68,11 +68,11 @@ const useAuth = (initialData) => {
       const fetchRes = await Fetch.checkUsername(data);
       if (fetchRes.data.code === 10001) {
         setCheckedEmail(true);
-      } else{
-        setCheckedEmail(false)
+      } else {
+        setCheckedEmail(false);
       }
       // return fetchRes;
-      console.log(fetchRes)
+      console.log(fetchRes);
     } catch (err) {
       throw err;
     } finally {
@@ -94,7 +94,7 @@ const useAuth = (initialData) => {
       isLoggedIn,
       accessToken,
       isLoading,
-      checkedEmail
+      checkedEmail,
     },
   };
 };
