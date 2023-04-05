@@ -4,10 +4,30 @@ import { useForm } from "react-hook-form";
 import Button from "../../components/Button";
 import styled from "styled-components";
 import { useRouter } from "next/router";
+import useAuth from "../../hook/useAuth/hook";
 
 const Page = () => {
   const form = useForm();
   const router = useRouter();
+  const { join, checkUsername } = useAuth();
+
+  const handleJoin = async (data) => {
+    try {
+      const res = await join(data);
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleCheckEmail = async (data) => {
+    try {
+      const res = await checkUsername(data);
+      console.log(data)
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <Wrapper>
@@ -19,7 +39,7 @@ const Page = () => {
           required={true}
           variant="standard"
         />
-        <Button label="중복확인" variant="outlined" />
+        <Button label="중복확인" variant="outlined" onClick={form.handleSubmit(handleCheckEmail)} />
 
         <Input
           name="password"
@@ -44,7 +64,11 @@ const Page = () => {
           required={true}
           variant="standard"
         />
-        <Button label="회원가입" variant="outlined" />
+        <Button
+          label="회원가입"
+          variant="outlined"
+          onClick={form.handleSubmit(handleJoin)}
+        />
       </Form>
     </Wrapper>
   );

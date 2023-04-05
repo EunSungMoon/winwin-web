@@ -3,6 +3,7 @@ import { atomWithReset, useHydrateAtoms } from "jotai/utils";
 export const accessTokenAtom = atomWithReset(undefined)
 export const isLoadingAtom = atomWithReset(false)
 export const isLoggedInAtom = atomWithReset(false)
+export const checkedEmailAtom = atomWithReset(false)
 
 export function init(initialData) {
   const hydrateTargets = []

@@ -10,7 +10,7 @@ export async function login(body) {
 }
 
 export async function join(body) {
-  const fetchRes = await axios.post('/join', JSON.stringify(body), {
+  const fetchRes = await axios.post('http://localhost:3000/api/join', JSON.stringify(body), {
     headers: {
       'Content-Type': 'application/json'
     }
@@ -19,7 +19,7 @@ export async function join(body) {
 }
 
 export async function checkUsername(body) {
-  const fetchRes = await axios.post('/checkUsername', JSON.stringify(body), {
+  const fetchRes = await axios.post('http://localhost:3000/api/checkUsername', JSON.stringify(body), {
     headers: {
       'Content-Type': 'application/json'
     }
