@@ -4,10 +4,28 @@ import { useForm } from "react-hook-form";
 import Button from "../../components/Button";
 import styled from "styled-components";
 import { useRouter } from "next/router";
+import useAuth, { Fetch as AuthFeth } from "../../hook/useAuth";
+
+export async function getServerSideProps(context) {
+  return {
+    props: {},
+  };
+}
 
 const Page = () => {
-  const form = useForm();
+  const form = useForm({});
   const router = useRouter();
+  const { login } = useAuth();
+
+  const handleLogin = async (data) => {
+    try {
+      const res = login(data);
+      console.log(data);
+      return res;
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <Wrapper>
@@ -27,7 +45,11 @@ const Page = () => {
           required={true}
           variant="standard"
         />
-        <Button label="로그인" variant="outlined" />
+        <Button
+          label="로그인"
+          variant="outlined"
+          onClick={form.handleSubmit(handleLogin)}
+        />
         <Text onClick={() => router.push("auth/find")}>
           아이디 / 비밀번호 찾기
         </Text>
