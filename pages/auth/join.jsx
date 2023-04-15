@@ -33,8 +33,8 @@ const Page = () => {
           type: "string",
           minLength: 1,
           errorMessage: {
-            minLength: "아이디를 입력해주세요.",
-            type: "아이디를 입력해주세요.",
+            minLength: "이름을 입력해주세요.",
+            type: "이름을 입력해주세요.",
           },
         },
       },
