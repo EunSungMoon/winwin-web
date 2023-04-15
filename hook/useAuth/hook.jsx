@@ -40,9 +40,10 @@ const useAuth = (initialData) => {
       setIsLoading(true);
       const fetchRes = await Fetch.login(data);
       sessionStorage.setItem("accessToken", fetchRes.data.message);
+      console.log(fetchRes)
       setAccessToken(fetchRes.data.message);
       setIsLoggedIn(true);
-      window.location = "/";
+      // window.location = "/";
     } catch (err) {
       throw err;
     } finally {
@@ -54,6 +55,7 @@ const useAuth = (initialData) => {
     try {
       setIsLoading(true);
       const fetchRes = await Fetch.join(data);
+      console.log(fetchRes)
       return fetchRes;
     } catch (err) {
       throw err;

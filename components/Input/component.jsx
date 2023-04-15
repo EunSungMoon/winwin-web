@@ -1,5 +1,6 @@
 import { Controller, useFormContext, get } from "react-hook-form";
 import Input from "@mui/material/TextField";
+import styled from "styled-components";
 
 const Component = ({
   name,
@@ -25,8 +26,9 @@ const Component = ({
       name={name}
       defaultValue={dv}
       render={({ field: { onChange, value }, formState }) => (
-        <Input
-          error={error && error}
+        <StyledInput
+          error={error}
+          helperText={error && error.message}
           label={label}
           variant={variant}
           onChange={(e) => onChange(e.target.value)}
@@ -42,3 +44,8 @@ const Component = ({
 };
 
 export default Component;
+
+const StyledInput = styled(Input)`
+  width: 100%;
+  margin-bottom: 24px;
+`;
