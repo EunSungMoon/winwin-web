@@ -3,30 +3,36 @@ import styled from "styled-components";
 import { useForm, FormProvider } from "react-hook-form";
 import Form from "../../components/Form";
 import { useEffect } from "react";
+import { findStores } from "../../hook/useStore/fetch";
+
+export async function getServerSideProps(ctx) {
+  const stores = await findStores();
+
+  return {
+    props: {
+      initialData: {
+        stores: stores.data.items,
+      },
+    },
+  };
+}
 
 const Page = ({ initialData }) => {
-  const form = useForm({
-    defaultValues: {
-      input: "",
-    },
-  });
-
-  const onSubmit = (data) => console.log(data);
+  const { stores } = initialData;
+  console.log("🚀 ~ file: index.jsx:22 ~ Page ~ initialData:", stores);
 
   return (
-    <Form form={form}>
-      <Input
-        name="input"
-        label="input"
-        placeholder="hi"
-        required={true}
-        variant="standard"
-      />
-    </Form>
+    <Wrapper>
+      {stores.map((st) => (
+        <div key={st.storeName}>{st.storeName}</div>
+      ))}
+    </Wrapper>
   );
 };
 
-const Text = styled.div`
-  color: ${({ theme }) => theme.colors.red[100]};
-`;
+const Wrapper = styled.div``;
+const Card=styled.div`
+  
+`
+
 export default Page;
