@@ -22,6 +22,7 @@ const Page = ({ initialData }) => {
   const form = useForm();
   const watchedOptions = form.watch("select");
   const [newOptions, setNewOptions] = useState([]);
+  const [targetIndex, setTargetIndex] = useState(undefined);
 
   const options = [
     {
@@ -65,7 +66,7 @@ const Page = ({ initialData }) => {
         },
       ],
     },
-    {
+        {
       name: "색상",
       values: [
         {
@@ -443,7 +444,6 @@ const Page = ({ initialData }) => {
       // skuStockStatus: SkuStockType.OUT_OF_STOCK,
       skuCurrentStock: 10,
     },
-
     {
       systemCode: "a초록스몰",
       imageLocations: [
@@ -608,11 +608,12 @@ const Page = ({ initialData }) => {
     (variantOption) => variantOption.optionValueSystemCodes
   );
   // options 배열을 필터링하여 matchedOptionValueSystemCodes에 포함된 systemCode를 가진 options의 values를 추출
-  const initialOptions = options.map((option) => ({
+  const initialOptions = options.map((option, index) => ({
     ...option,
     values: option.values.filter((value) =>
       matchedOptionValueSystemCodes.includes(value.systemCode)
     ),
+    isDisabled: index === 0 ? false : true,
   }));
 
   const [optionList, setOptionList] = useState(initialOptions);
@@ -622,12 +623,18 @@ const Page = ({ initialData }) => {
       initialOptions[index + 1] !== undefined &&
       initialOptions[index + 1]?.values;
 
-    const filteredWatchedOptions =
-      watchedOptions === undefined
-        ? [val]
-        : watchedOptions?.filter((op) => op !== undefined);
+    const newWatchedOptions =
+      watchedOptions === undefined ? [val] : watchedOptions;
 
-    form.setValue(`select.${index + 1}`, undefined);
+    newWatchedOptions.map((option, idx) => {
+      if (idx > index) {
+        form.setValue(`select.${idx}`, undefined);
+      }
+    });
+
+    const filteredWatchedOptions = newWatchedOptions?.filter(
+      (op) => op !== undefined
+    );
 
     const filteredVariantOptions = initialVariantOptions.filter((variant) => {
       return filteredWatchedOptions?.every((option) =>
@@ -645,15 +652,44 @@ const Page = ({ initialData }) => {
         matchedOptionValueSystemCodes.includes(value.systemCode)
       );
 
-    setNewOptions([
-      // ...newOptions,
-      {
-        name: initialOptions[index + 1]?.name,
-        index: index + 1,
-        values: filteredOptions,
-      },
-    ]);
+    if (initialOptions[index + 1]?.name !== undefined) {
+      const array = [
+        ...newOptions,
+        {
+          name: initialOptions[index + 1]?.name,
+          index: index + 1,
+          values: filteredOptions,
+          isDisabled: false,
+        },
+      ];
+
+      const uniqueArray = array
+        .reverse()
+        .filter(
+          (obj, index, self) =>
+            index === self.findIndex((t) => t.name === obj.name)
+        )
+        .reverse();
+
+      setTargetIndex(index);
+      setNewOptions(uniqueArray);
+    }
   };
+
+  function changeIsDisabledFromIndex(arr, targetIndex) {
+    // 만약 targetIndex가 배열의 범위를 벗어나면 원본 배열을 그대로 반환
+    if (targetIndex >= arr.length || targetIndex < 0) {
+      return arr;
+    }
+
+    // targetIndex 이후의 isDisabled 값을 모두 true로 변경한 새로운 배열 생성
+    const changedArray = arr.map((item, index) => ({
+      ...item,
+      isDisabled: index >= targetIndex + 2 ? true : item.isDisabled,
+    }));
+
+    return changedArray;
+  }
 
   useEffect(() => {
     if (newOptions.length === 0) {
@@ -673,11 +709,12 @@ const Page = ({ initialData }) => {
         return option;
       });
 
-      setOptionList(updatedOptions);
-      setNewOptions([])
+      if (targetIndex !== undefined) {
+        const myArray = changeIsDisabledFromIndex(updatedOptions, targetIndex);
+        setOptionList(myArray);
+      }
     }
-  }, [newOptions]);
-  console.log("🚀 ~ file: index.jsx:680 ~ Page ~ newOptions:", optionList);
+  }, [newOptions, targetIndex]);
 
   return (
     <Wrapper>
@@ -691,6 +728,7 @@ const Page = ({ initialData }) => {
             onValueChange={(val, item) =>
               handleChange(val, item, index, op.name)
             }
+            disabled={op.isDisabled}
           />
         ))}
       </Form>
